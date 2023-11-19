@@ -1,0 +1,54 @@
+.green{
+    background-color:rgba(128, 255, 0, 0.292)
+}
+.orange{
+    background-color: rgba(255, 166, 0, 0.377);
+}
+.red{
+  background: rgba(255, 0, 0, 0.598)
+}
+.col-lg-2{
+    background-color: white
+}
+
+.con::-webkit-scrollbar {
+    display: none;
+  }
+  .con{
+    /* box-shadow: 2px 2px 2px 2px grey; */
+    height: 60vh;
+    background-color: rgba(128, 128, 128, 0.158);
+    border-radius: 10px;
+    padding: 5px;
+  }
+
+  .d-i{
+    background-color: white;
+    border-radius: 5px;
+    margin-bottom: 5px;
+  }
+  .task:hover{
+    background-color:rgba(0, 0, 0, 0.247);
+    cursor: pointer;
+    
+  }
+
+  mat-icon{
+    font-size: 20px;
+  }
+  .add{
+    background-color: white;
+  }
+  .add:hover{
+    cursor: pointer;
+    background-color:rgba(0, 0, 0, 0.247);
+  }
+  .dropdown-menu{
+    max-height: 30vh;
+    overflow: scroll;
+  }
+  .drag-item:hover{
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.247);
+  }
+  

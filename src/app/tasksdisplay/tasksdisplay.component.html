@@ -1,0 +1,112 @@
+
+<div cdkDropListGroup class="row">
+  <div class="d-flex">
+    <h3 class="ms-3 mt-3 text-danger">KAN board</h3>
+  <img src="https://secure.gravatar.com/avatar/78f3db842257e5ee1e8e88de56a8d69c?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FSP-2.png" alt="Sharath Chandra Pendyala" width="30px" height="30px" class="ms-3 mt-3" style="border-radius: 50%;">
+  </div>
+  <!-- ToDo -->
+  <div cdkDropList   (cdkDropListDropped)="onDrop($event)"  [cdkDropListData]="tasks" class="col-lg-3 mt-5 tb ms-5 text-center overflow-scroll con"
+    style="max-height: 70vh">
+    <h5>ToDo</h5>
+    <div cdkDrag class="drag-item" *ngFor="let task of tasks" >
+      <div *ngIf="(task.status == 'ToDo' && task.userId == local) || (task.status == 'ToDo' && (task.assignedTo &&  task.assignedTo != ''))  "   class="border d-i shadow-lg w-100 p-4 task" [ngStyle]="{'background': task.priority == 'High' ? 'linear-gradient(to top, rgba(255, 0, 0, 0.598) 10%, transparent 20%)' : (task.priority === 'Medium' ? 'linear-gradient(to top, rgba(255, 166, 0, 0.377) 10%, transparent 20%)' : 'linear-gradient(to top, rgba(128, 255, 0, 0.292) 10%, transparent 20%)')}">
+        <h5 *ngIf="task.title" (click)="handleTask(task)">
+          {{ task.title }} <mat-icon>edit</mat-icon>
+        </h5>
+        <div class="dropdown d-flex justify-content-end">
+            <mat-icon  *ngIf=" !task.assignedBy || (task.assignedBy == local)"   class="dropdown-toggle" data-bs-toggle="dropdown" (click) = "assignTo()">supervised_user_circle</mat-icon>
+          <ul class="dropdown-menu overflow-scroll"  aria-labelledby="dropdownMenuButton">
+            <li  *ngFor = "let user of users"><a class="dropdown-item" id = "dropdown-item"  (click)="assignToUser(user,task)">
+              <span data-testid="issue-field-assignee.common.ui.read-view.popover.avatar--person" role="img" aria-label="Unassigned" class="css-snhnyn" style="--icon-primary-color: var(--ds-icon-inverse, #FFFFFF); --icon-secondary-color: var(--ds-icon-subtle, #8993A4);"><svg width="24" height="24" viewBox="0 0 24 24" role="presentation"><g fill="currentColor" fill-rule="evenodd"><path d="M6 14c0-1.105.902-2 2.009-2h7.982c1.11 0 2.009.894 2.009 2.006v4.44c0 3.405-12 3.405-12 0V14z"></path><circle cx="12" cy="7" r="4"></circle></g></svg></span>
+              {{user.firstName}}</a></li>
+          </ul>
+        </div>
+      </div> 
+    </div>
+    <div *ngIf="clickedIn1 == '' && addTaskClicked" class="border w-100 p-4">
+      <input type="text" id="dynamicInput" />
+      <br />
+      <button mat-raised-button color="primary" (click)="handleTitle('ToDo')">
+        Save
+      </button>
+    </div>
+    <div *ngIf="!addTaskClicked || clickedIn1 == 'ToDo'" class="border mt-1  add" (click)="addTask('', 'ToDo')" >
+      <mat-icon id="textarea">add</mat-icon> Add Task
+    </div>
+  </div>
+  <!-- In progress -->
+  <div cdkDropList (cdkDropListDropped)="onDrop($event)" [cdkDropListData]="tasks" class="col-lg-3 mt-5 ms-5 text-center overflow-scroll con"
+    style="max-height: 70vh"
+  >
+    <h5>In Progress</h5>
+    <div cdkDrag class="drag-item" *ngFor="let task of tasks">
+      <div *ngIf="(task.status == 'InProgress' && task.userId == local) || (task.status == 'InProgress' && (task.assignedTo &&  task.assignedTo != '')) " class="border shadow-lg d-i w-100 p-4 task" [ngStyle]="{'background': task.priority == 'High' ? 'linear-gradient(to top, rgba(255, 0, 0, 0.598) 10%, transparent 20%)' : (task.priority === 'Medium' ? 'linear-gradient(to top, rgba(255, 166, 0, 0.377) 10%, transparent 20%)' : 'linear-gradient(to top, rgba(128, 255, 0, 0.292) 10%, transparent 20%)')}">
+        <h5 *ngIf="task.title" (click)="handleTask(task)">
+          {{ task.title }} <mat-icon>edit</mat-icon>
+        </h5>
+        <div class="dropdown d-flex justify-content-end">
+          <mat-icon  *ngIf=" !task.assignedBy || (task.assignedBy == local)"   class="dropdown-toggle" data-bs-toggle="dropdown" (click) = "assignTo()">supervised_user_circle</mat-icon>
+        <ul class="dropdown-menu overflow-scroll"  aria-labelledby="dropdownMenuButton">
+          <li  *ngFor = "let user of users"><a class="dropdown-item" id = "dropdown-item"  (click)="assignToUser(user,task)">
+            <span data-testid="issue-field-assignee.common.ui.read-view.popover.avatar--person" role="img" aria-label="Unassigned" class="css-snhnyn" style="--icon-primary-color: var(--ds-icon-inverse, #FFFFFF); --icon-secondary-color: var(--ds-icon-subtle, #8993A4);"><svg width="24" height="24" viewBox="0 0 24 24" role="presentation"><g fill="currentColor" fill-rule="evenodd"><path d="M6 14c0-1.105.902-2 2.009-2h7.982c1.11 0 2.009.894 2.009 2.006v4.44c0 3.405-12 3.405-12 0V14z"></path><circle cx="12" cy="7" r="4"></circle></g></svg></span>
+            {{user.firstName}}</a></li>
+        </ul>
+      </div>
+      </div>
+    </div>
+    <div *ngIf="clickedIn2 == '' && addTaskClicked" class="border w-100 p-4">
+      <input type="text" id="dynamicInput" (click)="handleInput($event)" />
+      <br/>
+      <button mat-raised-button color="primary"  (click)="handleTitle('InProgress')">
+        Save
+      </button>
+    </div>
+    <div *ngIf="!addTaskClicked || clickedIn2 == 'InProgress'" class="border mt-1  add" (click)="addTask('', 'InProgress')" >
+      <mat-icon id="textarea">add</mat-icon> <span> Add Task</span>
+    </div>
+  </div>
+  <!-- Done -->
+  <div cdkDropList (cdkDropListDropped)="onDrop($event)" [cdkDropListData]="tasks" class="col-lg-3 mt-5 ms-5 text-center overflow-scroll con"
+    style="height: 60vh"
+  >
+    <h5>Done</h5>
+    <div cdkDrag class="drag-item" *ngFor="let task of tasks">
+      <div *ngIf="(task.status == 'Done' && task.userId == local) || (task.status == 'Done' && (task.assignedTo &&  task.assignedTo != ''))" class="border d-i w-100 p-4 task" [ngStyle]="{'background': task.priority == 'High' ? 'linear-gradient(to top, rgba(255, 0, 0, 0.598) 10%, transparent 20%)' : (task.priority === 'Medium' ? 'linear-gradient(to top, rgba(255, 166, 0, 0.377) 10%, transparent 20%)' : 'linear-gradient(to top, rgba(128, 255, 0, 0.292) 10%, transparent 20%)')}">
+        <h5 *ngIf="task.title" (click)="handleTask(task)">
+          {{ task.title }} <mat-icon>edit</mat-icon>
+        </h5>
+        <div class="dropdown d-flex justify-content-end">
+          <mat-icon  *ngIf=" !task.assignedBy || (task.assignedBy == local)"   class="dropdown-toggle" data-bs-toggle="dropdown" (click) = "assignTo()">supervised_user_circle</mat-icon>
+        <ul class="dropdown-menu overflow-scroll"  aria-labelledby="dropdownMenuButton">
+          <li  *ngFor = "let user of users"><a class="dropdown-item" id = "dropdown-item"  (click)="assignToUser(user,task)">
+            <span data-testid="issue-field-assignee.common.ui.read-view.popover.avatar--person" role="img" aria-label="Unassigned" class="css-snhnyn" style="--icon-primary-color: var(--ds-icon-inverse, #FFFFFF); --icon-secondary-color: var(--ds-icon-subtle, #8993A4);"><svg width="24" height="24" viewBox="0 0 24 24" role="presentation"><g fill="currentColor" fill-rule="evenodd"><path d="M6 14c0-1.105.902-2 2.009-2h7.982c1.11 0 2.009.894 2.009 2.006v4.44c0 3.405-12 3.405-12 0V14z"></path><circle cx="12" cy="7" r="4"></circle></g></svg></span>
+            {{user.firstName}}</a></li>
+        </ul>
+      </div>
+      </div>
+    </div>
+    <div *ngIf="clickedIn3 == '' && addTaskClicked" class="border w-100 p-4">
+      <input type="text" id="dynamicInput" />
+      <br />
+      <button mat-raised-button color="primary" (click)="handleTitle('Done')">
+        Save
+      </button>
+    </div>
+    <div *ngIf="!addTaskClicked || clickedIn3 == 'Done'" class="border mt-1  add" (click)="addTask('', 'Done')" >
+      <mat-icon id="textarea">add</mat-icon> Add Task
+    </div>
+  </div>
+
+  <div class="mt-5 ">
+    <h5 class="ms-1 ">Assigned Tasks</h5>
+    <div *ngIf="assignedTasks.length" cdkDropList (cdkDropListDropped)="onDrop($event)" [cdkDropListData]="tasks"   class="mt-2 ms-1 me-1 border bg-white  row" style="height: 20vh;">
+        <div cdkDrag *ngFor="let assignedTask of assignedTasks"  class="col-lg-2 border shadow-lg m-2 drag-item" (click) = "example(assignedTask)">
+          <h5 class="m-2">{{assignedTask.title}}</h5>
+        </div>
+    </div>
+    <div *ngIf="!assignedTasks.length" class="mt-2 border bg-white shadow-lg d-flex justify-content-center align-items-center" style="height: 20vh;">
+        <h5 style="color: rgba(255, 0, 0, 0.527);">You have No assigned tasks</h5>
+    </div>
+  </div>
+</div>
+

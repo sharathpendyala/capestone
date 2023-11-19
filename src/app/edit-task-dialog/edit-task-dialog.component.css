@@ -1,0 +1,19 @@
+.no-border {
+    border: none;
+ }
+ 
+ mat-form-field {
+    border: none;
+  }
+  mat-form-field:hover .mat-form-field-ripple {
+    display: none;
+  }
+  mat-form-field:hover {
+    border: none;
+  }
+  input:hover{
+    background-color:rgba(0, 0, 0, 0.247);
+  }
+  #priority{
+    height: 20px;
+  }

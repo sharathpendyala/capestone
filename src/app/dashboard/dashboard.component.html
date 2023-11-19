@@ -1,0 +1,25 @@
+<div class="mt-5">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Title</th>
+        <th scope="col">Status</th>
+        <th scope="col">DueDate</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor = "let task of tasks">
+        <td>{{task.title}}</td>
+        <td>{{task.status}}</td>
+        <td>{{task.dueDate}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <mat-paginator
+    [length]="length"
+    [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    aria-label="Select page"
+  >
+  </mat-paginator>
+</div>

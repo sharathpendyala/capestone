@@ -1,0 +1,121 @@
+<form action="" [formGroup]="reactiveForm">
+  <div class="row">
+    <div class="col-lg-8 overflow-scroll" style="max-height: 80vh">
+      <b
+        ><input
+          type="text"
+          formControlName="title"
+          [ngClass]="{
+            'no-border': reactiveForm.controls['title'].value != '',
+            highlight: reactiveForm.controls['title'].value === ''
+          }"
+          class="mt-4 ms-4"
+          style="
+            font-size: 20px;
+            font-family: 'Times New Roman', Times, serif;
+            font-weight: bold;
+          "
+      /></b>
+      <br />
+      <p class="mt-4 ms-4">
+        Description
+        <br />
+        <input
+          type="text"
+          class="mt-1 w-100"
+          formControlName="description"
+          [ngClass]="{
+            'no-border': reactiveForm.controls['description'].value != '',
+            highlight: reactiveForm.controls['description'].value === ''
+          }"
+        />
+      </p>
+      <div class="mt-5"></div>
+      <div class="ms-4">
+        <h4>Add a comment</h4>
+
+        <input
+          type="email"
+          class="form-control w-75"
+          id="comment"
+          aria-describedby="emailHelp"
+          placeholder="Add a comment"
+          formControlName="comment"
+        />
+        <button class="btn btn-primary mt-2" (click)="save($event)">
+          Save
+        </button>
+      </div>
+      <div class="mt-3 ms-4">
+        <p>Activity</p>
+        <div
+          *ngFor="let comment of this.taskService.task.comments"
+          class="shadow-lg border mt-3"
+        >
+          <mat-icon>person_pin</mat-icon>
+          <span class="ms-2">{{ comment }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 overflow-scroll" style="max-height: 80vh;">
+      <div class="mt-3 shadow-lg">
+
+        <mat-form-field>
+          <mat-label>Actions</mat-label>
+          <select matNativeControl formControlName="selectedOption">
+            <option value="ToDo">ToDo</option>
+            <option value="InProgress">In Progress</option>
+            <option value="Done">Done</option>
+          </select>
+        </mat-form-field>
+      </div>
+      <div class="mt-3 shadow-lg">
+        <h5 class=" ms-2">Details</h5>
+        <div class="mt-2 ms-2" style="width: 700px;">
+          <div class="d-flex">
+            <!-- <p *ngIf="reachedTask.assignedBy != reachedTask.userId">Assignee</p>
+            <p class="ms-5" *ngIf="reachedTask.assignedBy != reachedTask.userId ">{{user.firstName}}</p>
+            <p *ngIf="reachedTask.assignedBy == reachedTask.userId ">Assigned To</p> -->
+            <p>Assignee</p>
+            <p class="ms-5">lorem hello</p>
+          </div>
+          <div class="d-flex mt-3">
+            <p>Priority</p>
+            <select name="" id="priority" formControlName = "priority" class="ms-5">
+              <option value="Low">Low</option>
+              <option value="Medium">Medium</option>
+              <option value="High">High</option>
+            </select>
+          </div>
+          <div class="mt-3">
+            
+            <div class="mt-3 d-flex" *ngIf = "reachedTask.dueDate!=''">
+              <p>Due Date</p>
+              <p class="ms-5">{{reachedTask.dueDate}}</p>
+            </div>
+          </div>
+          <div class="mt-5" >
+            <h5>Edit Due Date</h5>
+            <mat-form-field>
+              <mat-label>Choose a date</mat-label>
+              <input matInput formControlName = "date" [matDatepicker]="picker">
+              <mat-hint>MM/DD/YYYY</mat-hint>
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+<div class="d-flex justify-content-center m-3">
+  <button
+    [mat-dialog-close]="reachedTask"
+    (click)="handleDialog()"
+    mat-raised-button
+    color="warn"
+  >
+    Close
+  </button>
+</div>
